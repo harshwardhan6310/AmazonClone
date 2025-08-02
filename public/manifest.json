@@ -1,0 +1,8 @@
+{
+  "short_name": "Amazon Clone App",
+  "name": "Amazon Clone App by Harshwardhan Chaudhary, 2021",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
