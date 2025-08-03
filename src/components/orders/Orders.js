@@ -11,7 +11,7 @@ function Orders() {
     useEffect(() => {
         if(user){
             db.collection('users')
-            .doc(user?.uid)
+            .doc(user?.email)
             .collection('orders')
             .orderBy('created', 'desc')
             .onSnapshot(snapshot => (
