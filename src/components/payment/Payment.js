@@ -47,12 +47,14 @@ function Payment() {
         event.preventDefault() ;
         setProcessing(true) ;
 
+        // console.log('the client secret is obtained -', clientSecret) ;
+        console.log('the user is ', user) ;
         const payload = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: elements.getElement(CardElement),
                 billing_details: {
-                    name: user?.uid,
-                    email: user?.uid,
+                    name: user?.displayName || user?.email || 'Guest User',
+                    email: user?.email || 'guest@example.com',
                     address: {
                         line1: '123 Main Street',
                         line2: 'Apt 4B',
@@ -64,29 +66,42 @@ function Payment() {
                 }
             }
         });
-        // console.log(payload) ;
-        // if (payload.error) {
-        //     setError(payload.error.message);
-        //     setProcessing(false);
-        //     return;
-        // }
-
-        const paymentIntent = payload?.paymentIntent || {
-            amount: getBasketTotal(basket) * 100,
-            created: Math.floor(Date.now() / 1000)};
-
-        const order = {
-            basket,
-            amount: paymentIntent.amount,
-            created: paymentIntent.created
-        };
-        const userId = user?.uid || 'guest';
-        let ordersJson = JSON.parse(localStorage.getItem('orders')) || {};
-        if (!ordersJson[userId]) {
-            ordersJson[userId] = [];
+        console.log(payload) ;
+        if (payload.error) {
+            setError(payload.error.message);
+            setProcessing(false);
+            return;
         }
-        ordersJson[userId].push(order);
-        localStorage.setItem('orders', JSON.stringify(ordersJson));
+        
+        const paymentIntent = payload?.paymentIntent;
+
+        db.collection('users')
+            .doc(user?.email || 'guest@example.com')
+            .collection('orders')
+            .add({
+                basket: basket,
+                amount: paymentIntent.amount,
+                created: paymentIntent.created
+            });
+
+        
+
+        // const paymentIntent = payload?.paymentIntent || {
+        //     amount: getBasketTotal(basket) * 100,
+        //     created: Math.floor(Date.now() / 1000)};
+
+        // const order = {
+        //     basket,
+        //     amount: paymentIntent.amount,
+        //     created: paymentIntent.created
+        // };
+        // const userId = user?.uid || 'guest';
+        // let ordersJson = JSON.parse(localStorage.getItem('orders')) || {};
+        // if (!ordersJson[userId]) {
+        //     ordersJson[userId] = [];
+        // }
+        // ordersJson[userId].push(order);
+        // localStorage.setItem('orders', JSON.stringify(ordersJson));
 
         setSucceeded(true);
         setError(null);

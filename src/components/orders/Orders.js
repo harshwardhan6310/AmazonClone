@@ -9,20 +9,22 @@ function Orders() {
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        if (user) {
-            const ordersJson = JSON.parse(localStorage.getItem('orders')) || {};
-            const userOrders = ordersJson[user.uid] || [];
-            const ordersWithId = userOrders
-                .sort((a, b) => b.created - a.created)
-                .map(order => ({
-                    id: order.created,
-                    data: order
-                }));
-            setOrders(ordersWithId);
-        } else {
-            setOrders([]);
+        if(user){
+            db.collection('users')
+            .doc(user?.uid)
+            .collection('orders')
+            .orderBy('created', 'desc')
+            .onSnapshot(snapshot => (
+                setOrders(snapshot.docs.map(doc => ({
+                    id: doc.id ,
+                    data: doc.data()
+                })))
+            ))
+        }else{
+            setOrders([])
         }
-    }, [user]);
+        
+    }, [user])
 
   return (
     <div className='orders'>
