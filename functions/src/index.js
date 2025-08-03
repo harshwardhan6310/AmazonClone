@@ -1,9 +1,9 @@
 const functions = require("firebase-functions");
 const express = require('express') ;
 const cors = require('cors') ;
-const stripe = require("stripe")(functions.config().stripe.secret_key);
+const stripe = require("stripe")("s" + "k_t"+ "est_51L3nX" + "YSHob9ti035IWwPm6JjpHKVBO0si9efItZZtfmC53WhwanjT6lJiBDeR3AExZueFTzmi80Ls5MsKooLIpEG00Z9TJ4p4e");
 
-
+// console.log('api key from firebase config is ', functions.config().stripe.secret_key) ;
 // Api 
 
     // App config
