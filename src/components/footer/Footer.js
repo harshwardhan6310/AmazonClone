@@ -107,7 +107,7 @@ function Footer() {
         </div>
 
         <div className='amazon-places'>
-            <img src='https://i.imgur.com/AyDSrRb.png'/>
+            <img src='static/AmazonLogoWhite.png'/>
             <p>Australia</p>
             <p>Brazil</p>
             <p>Canada</p>
