@@ -64,6 +64,12 @@
     font-weight: 600 ;
 }
 
+.payment-title-warning {
+    flex: 0.4 ;
+    font-size: 15px ;
+    font-weight: 400 ;
+}
+
 .payment-items, .payment-details {
     flex: 0.8 ;
 }

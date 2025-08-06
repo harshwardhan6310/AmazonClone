@@ -229,6 +229,9 @@ function Payment() {
                     </div>}
                 </form>
             </div>
+            <div className='payment-title-warning'>
+                <b>Note:</b> This is a test region API from Stripe. No real money will be charged. A real card will not work, nor it stores any information.<br/>Use card <b>4242 4242 4242 4242</b> with <b>any future date</b> and <b>any CVC</b>. It will always succeed.
+            </div>
         </div>
     </div>
   )
